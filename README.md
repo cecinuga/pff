@@ -13,11 +13,14 @@ PostgreSQL + TimescaleDB database.
 > PFF has **not yet been tested against a real bank or a real Firebase project**.
 > The demo mode below runs everything with generated data.
 
+![PFF overview: total, mean and max-min of each metric domain for the last month, with the account balances above](screenshots/overview.png)
+
 ---
 
 ## Contents
 
 - [What PFF does](#what-pff-does)
+- [Screenshots](#screenshots)
 - [Try it in two minutes (demo mode)](#try-it-in-two-minutes-demo-mode)
 - [Using the app](#using-the-app)
 - [Running it for real](#running-it-for-real)
@@ -61,6 +64,45 @@ You can analyse the last **1 day**, **1 week**, **2 weeks**, **1 month**,
 **3 months**, or a **custom** range. Budgets use calendar periods instead (today,
 this week, this fortnight, this month, this quarter, or custom), so an alert fires
 at most once per period.
+
+---
+
+## Screenshots
+
+All screenshots come from [demo mode](#try-it-in-two-minutes-demo-mode): the
+generated *PFF Demo Bank* data, signed in as `you@example.com`.
+
+**Analytics.** *Spending by category* over the last 3 months: metrics, a chart
+over time, the split by class, and the start of the transaction history.
+
+![Spending by category page: total, mean, max-min and count, a bar chart over time, allocation bars per category, and the history list](screenshots/analytics.png)
+
+**Transaction detail.** Every field the bank sent, the domains and classes the
+transaction counts in, and its category, which you can change.
+
+![Transaction detail dialog for a grocery card payment, showing dates, account, bank codes, merchant category code and the editable category](screenshots/transaction-detail.png)
+
+**Budgets.** Each budget shows how much of its limit you have used in the
+current period: on track, near the limit, or over it.
+
+![Budgets page with four budgets: two on track, one near its limit and one over its limit](screenshots/budgets.png)
+
+**Notifications and bank connections.** Budget alerts land in the inbox (and as
+push notifications, if enabled). The bank page shows each consent and its
+accounts.
+
+| Notifications | Bank connections |
+|---|---|
+| ![Notifications inbox with a budget-exceeded alert and a near-limit alert](screenshots/notifications.png) | ![Bank connections page: PFF Demo Bank active, with a current account and a savings account and their balances](screenshots/connections.png) |
+
+**On your phone.** The same app with a bottom navigation bar. You can install it
+on the Home Screen as a PWA.
+
+<p>
+  <img src="screenshots/mobile-overview.png" width="260" alt="Overview on a phone: range picker, account balances and metric cards">
+  &nbsp;
+  <img src="screenshots/mobile-analytics.png" width="260" alt="Spending by category on a phone: metrics and the chart over time">
+</p>
 
 ---
 
@@ -302,6 +344,7 @@ Every `PFF_SCHEDULER_INTERVAL` (default 6 h) the backend:
 ```
 pff/
 ├── Makefile         all run / dev / test commands (`make help` lists them)
+├── screenshots/     images used in this README (taken in demo mode)
 ├── ms/              backend: Go 1.23 + Gin, one service split into packages
 │   ├── cmd/pff/         entry point: config, HTTP server, scheduler, migrations
 │   └── internal/
