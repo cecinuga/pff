@@ -1,0 +1,4 @@
+# PFF allow-list (deny by default). One e-mail per line; '#' starts a comment.
+# Copy to allowed-emails.txt. The backend syncs it into user_whitelist at
+# startup: listed addresses are enabled, removed ones are disabled.
+you@example.com

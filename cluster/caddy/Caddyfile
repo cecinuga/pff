@@ -1,0 +1,7 @@
+# HTTPS front for PFF (profile "tls"). Caddy obtains and renews certificates
+# automatically for PFF_DOMAIN; DNS for the domain must point to this host.
+{$PFF_DOMAIN} {
+	encode gzip
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	reverse_proxy client:8080
+}

@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens (RGB triplets so Tailwind can apply alpha). Chart colors follow
+   the dataviz reference palette: one accent hue for single-series charts,
+   reserved status colors for budget state. */
+:root {
+  color-scheme: light;
+  --surface: 252 252 251;
+  --raised: 255 255 255;
+  --sunken: 243 242 239;
+  --line: 228 227 222;
+  --ink: 11 11 11;
+  --ink-2: 82 81 78;
+  --ink-3: 120 119 114;
+  --accent: 42 120 214;      /* #2a78d6 */
+  --accent-soft: 205 226 251; /* #cde2fb, track of accent meters */
+  --good: 12 163 12;          /* #0ca30c */
+  --warning: 250 178 25;      /* #fab219 */
+  --critical: 208 59 59;      /* #d03b3b */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface: 26 26 25;
+    --raised: 36 36 34;
+    --sunken: 20 20 19;
+    --line: 56 56 53;
+    --ink: 240 239 236;
+    --ink-2: 195 194 183;
+    --ink-3: 150 149 141;
+    --accent: 57 135 229;     /* #3987e5 */
+    --accent-soft: 24 79 149; /* #184f95 */
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: 26 26 25;
+  --raised: 36 36 34;
+  --sunken: 20 20 19;
+  --line: 56 56 53;
+  --ink: 240 239 236;
+  --ink-2: 195 194 183;
+  --ink-3: 150 149 141;
+  --accent: 57 135 229;
+  --accent-soft: 24 79 149;
+}
+
+html,
+body {
+  @apply bg-surface text-ink antialiased;
+  font-feature-settings: "tnum" 1;
+}
+
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-line bg-raised;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition
+      disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white hover:brightness-110;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-raised text-ink hover:bg-sunken;
+  }
+  .btn-danger {
+    @apply btn border border-line bg-raised text-critical hover:bg-sunken;
+  }
+  .input {
+    @apply w-full rounded-lg border border-line bg-raised px-3 py-2 text-sm text-ink placeholder:text-ink-3
+      focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30;
+  }
+  .label {
+    @apply mb-1 block text-xs font-medium text-ink-2;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}

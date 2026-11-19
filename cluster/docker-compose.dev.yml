@@ -1,0 +1,38 @@
+# Development overlay: runs the whole stack with no external accounts.
+#   - dev sign-in (any e-mail listed in config/allowed-emails.txt, no Google)
+#   - mock bank with deterministic demo data (no Enable Banking credentials)
+#   - push notifications and e-mail codes are written to the ms log
+#   - the database is published on 127.0.0.1:5432 for `go run` / psql
+#
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up -d --build
+#
+# Never use this overlay for real data: config.Load refuses these settings
+# unless PFF_ENV=development.
+#
+# Own project name and subnet, so dev can run next to production on the same
+# host without sharing its database volume or network.
+name: pff-dev
+
+services:
+  db:
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  ms:
+    env_file:
+      - path: .env.dev
+        required: true
+    environment:
+      PFF_ENV: development
+      PFF_AUTH_MODE: dev
+      PFF_BANK_PROVIDER: mock
+      PFF_PUSH_PROVIDER: log
+      PFF_MAIL_PROVIDER: log
+      PFF_PUBLIC_APP_URL: http://localhost:${PFF_HTTP_PORT:-8080}
+      PFF_TRUSTED_PROXIES: 172.29.0.0/24
+
+networks:
+  pff:
+    ipam:
+      config:
+        - subnet: 172.29.0.0/24
